@@ -23,4 +23,6 @@ public class Cake {
     private String title;
 
     private String description;
+
+    private String category;
 }
