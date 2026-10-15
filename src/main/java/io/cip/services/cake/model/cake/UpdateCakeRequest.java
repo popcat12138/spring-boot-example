@@ -1,4 +1,4 @@
 package io.cip.services.cake.model.cake;
 
-public record UpdateCakeRequest(String title, String description) {
+public record UpdateCakeRequest(String title, String description, String category) {
 }

@@ -37,6 +37,7 @@ public class CakeService {
         Cake cake = cakeRepository.save(Cake.builder()
                 .title(createCakeRequest.title())
                 .description(createCakeRequest.description())
+                .category("apple")
                 .build());
         return cakeResponse(cake);
     }
@@ -48,6 +49,7 @@ public class CakeService {
                 existingCake.toBuilder()
                         .title(updateCakeRequest.title())
                         .description(updateCakeRequest.description())
+                        .category("apple")
                         .build()
         );
 
@@ -66,7 +68,7 @@ public class CakeService {
     }
 
     private CakeResponse cakeResponse(Cake cake) {
-        return new CakeResponse(cake.getId(), cake.getTitle(), cake.getDescription());
+        return new CakeResponse(cake.getId(), cake.getTitle(), cake.getDescription(),cake.getCategory());
     }
 
 }
