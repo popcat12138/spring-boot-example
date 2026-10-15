@@ -117,6 +117,7 @@ class CakeControllerTest {
                     //
                     .jsonPath("$.id").isEqualTo(cakeId)
                     .jsonPath("$.title").isEqualTo("some title")
+                    .jsonPath("$.category").isEqualTo("apple")
                     .jsonPath("$.description").isEqualTo("some description");
         }
 
@@ -164,7 +165,8 @@ class CakeControllerTest {
                     .contentType(APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Map.of(
                             "title", "new title",
-                            "description", "new description"
+                            "description", "new description",
+                            "apple","apple"
                     )))
                     .exchange()
                     .expectStatus().isCreated()
@@ -173,10 +175,11 @@ class CakeControllerTest {
                     //
                     .jsonPath("$.title").isEqualTo("new title")
                     .jsonPath("$.description").isEqualTo("new description")
+                    .jsonPath("$.category").isEqualTo("apple")
                     .jsonPath("$.id").value(id -> {
                         Cake savedCake = cakeRepository.findById(parseLong(id.toString())).get();
                         assertThat(savedCake)
-                                .isEqualTo(new Cake(parseLong(id.toString()), "new title", "new description"));
+                                .isEqualTo(new Cake(parseLong(id.toString()), "new title", "new description","apple"));
                     });
         }
 
@@ -187,7 +190,8 @@ class CakeControllerTest {
                     .contentType(APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Map.of(
                             "title", "new title",
-                            "description", "new description"
+                            "description", "new description",
+                            "apple","apple"
                     )))
                     .exchange()
                     .expectStatus().isUnauthorized()
@@ -202,7 +206,8 @@ class CakeControllerTest {
                     .contentType(APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Map.of(
                             "title", "new title",
-                            "description", "new description"
+                            "description", "new description",
+                            "apple","apple"
                     )))
                     .exchange()
                     .expectStatus().isUnauthorized()
@@ -227,14 +232,15 @@ class CakeControllerTest {
                     .contentType(APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Map.of(
                             "title", "updated title",
-                            "description", "updated description"
+                            "description", "updated description",
+                            "apple","apple"
                     )))
                     .exchange()
                     .expectStatus().isNoContent()
                     .expectBody().isEmpty();
 
             Cake savedCake = cakeRepository.findById(cakeId).get();
-            assertThat(savedCake).isEqualTo(new Cake(cakeId, "updated title", "updated description"));
+            assertThat(savedCake).isEqualTo(new Cake(cakeId, "updated title", "updated description","apple"));
         }
 
         @Test
